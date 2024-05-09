@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information Form</title>
+    <link rel="stylesheet" href="Style.css">
+    <script src="Script.js"></script>
+    
+    <body>
+        <div class="header">
+            <h1>_Surveys</h1>
+            <div class="header-links">
+                <a href="Index.html" class="active">FILL OUT SURVEY</a>
+                <a href="Result.html">VIEW SURVEY RESULTS</a>
+            </div>
+        </div>
+    
+</head>
+<body>
+    <h1>Personal Details:</h1>
+
+    <div>
+    <form id="userForm" action="javascript:void(0)" method="post">
+        <label for="full_name">Full Names:</label>
+        <input type="text" id="full_name" name="full_name" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required><br>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required><br>
+
+        <label for="contact_number">Contact Number:</label>
+        <input type="tel" id="contact_number" name="contact_number" required><br>
+
+       
+<h4>What is your favoritefood</h4>
+        <div class="checkbox-group">
+            
+            <input type="checkbox" id="pizza" name="favorite_food" value="Pizza">
+            <label for="pizza">Pizza</label>
+
+            <input type="checkbox" id="pasta" name="favorite_food" value="Pasta">
+            <label for="pasta">Pasta</label>
+
+            <input type="checkbox" id="pop" name="favorite_food" value="Pop">
+            <label for="pop">Pap</label>
+
+            <input type="checkbox" id="wors" name="favorite_food" value="Wors">
+            <label for="wors">Wors</label>
+
+            <input type="checkbox" id="other" name="favorite_food" value="Other">
+            <label for="other">Other</label>
+        </div> 
+    
+
+<h4>"Please rate your level of agreement on a scale from 1 to 5,with 1 being'Strongly Agree'and 5 being'Strongly Disagree'"</h4>
+        <table border="1">
+    
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Strongly Agree</th>
+                    <th>Agree</th>
+                    <th>Neutral</th>
+                    <th>Disagree</th>
+                    <th>Strongly Disagree</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>I like to watch movies</td>
+                    <td>
+                        <input type="radio" id="movies_strongly_agree" name="movies" value="Strongly Agree">
+                        <label for="movies_strongly_agree"></label>
+                    </td>
+                    <td>
+                        <input type="radio" id="movies_agree" name="movies" value="Agree">
+                        <label for="movies_agree"></label>
+                    </td>
+                    <td>
+                        <input type="radio" id="movies_neutral" name="movies" value="Neutral">
+                        <label for="movies_neutral"></label>
+                    </td>
+                    <td>
+                        <input type="radio" id="movies_disagree" name="movies" value="Disagree">
+                        <label for="movies_disagree"></label>
+                    </td>
+                    <td>
+                        <input type="radio" id="movies_strongly_disagree" name="movies" value="Strongly Disagree">
+                        <label for="movies_strongly_disagree"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>I like to listen to the radio</td>
+                    <td>
+                        <input type="radio" id="radio_strongly_agree" name="radio" value="Strongly Agree">
+                        <label for="radio_strongly_agree"></label>
+                    </td>
+                    <td>
+                        <input type="radio" id="radio_agree" name="radio" value="Agree">
+                        <label for="radio_agree"></label>
+                    </td>
+                    <td>
+                        <input type="radio" id="radio_neutral" name="radio" value="Neutral">
+                        <label for="radio_neutral"></label>
+                    </td>
+                    <td>
+                        <input type="radio" id="radio_disagree" name="radio" value="Disagree">
+                        <label for="radio_disagree"></label>
+                    </td>
+                    <td>
+                        <input type="radio" id="radio_strongly_disagree" name="radio" value="Strongly Disagree">
+                        <label for="radio_strongly_disagree"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>I like to eat out </td>
+                    <td>
+                        <input type="radio" id="eat_out_strongly_agree" name="eat_out" value="Strongly Agree">
+                        <label for="eat_out_strongly_agree"></label>
+                    </td>
+                    <td>
+                        <input type="radio" id="eat_out_agree" name="eat_out" value="Agree">
+                        <label for="eat_out_agree"></label>
+                    </td>
+                    <td>
+                        <input type="radio" id="eat_out_neutral" name="eat_out" value="Neutral">
+                        <label for="eat_out_neutral"></label>
+                    </td>
+                    <td>
+                        <input type="radio" id="eat_out_disagree" name="eat_out" value="Disagree">
+                        <label for="eat_out_disagree"></label>
+                    </td>
+                    <td>
+                        <input type="radio" id="eat_out_strongly_disagree" name="eat_out" value="Strongly Disagree">
+                        <label for="eat_out_strongly_disagree"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>I like to watch TV</td>
+                    <td>
+                        <input type="radio" id="watch_tv_strongly_agree" name="watch_tv" value="Strongly Agree">
+                        <label for="watch_tv_strongly_agree"></label>
+                    </td>
+                    <td>
+                        <input type="radio" id="watch_tv_agree" name="watch_tv" value="Agree">
+                        <label for="watch_tv_agree"></label>
+                    </td>
+                    <td>
+                        <input type="radio" id="watch_tv_neutral" name="watch_tv" value="Neutral">
+                        <label for="watch_tv_neutral"></label>
+                    </td>
+                    <td>
+                        <input type="radio" id="watch_tv_disagree" name="watch_tv" value="Disagree">
+                        <label for="watch_tv_disagree"></label>
+                    </td>
+                    <td>
+                        <input type="radio" id="watch_tv_strongly_disagree" name="watch_tv" value="Strongly Disagree">
+                        <label for="watch_tv_strongly_disagree"></label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <input type="submit" value="Submit">
+    </form>
+    
+</body>
+</html>

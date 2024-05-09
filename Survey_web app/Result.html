@@ -1,0 +1,201 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Data Results</title>
+    <link rel="stylesheet" href="Result.css">
+    <link rel="stylesheet" href="Style.css">
+
+
+
+  
+</head>
+
+<body>
+    <div class="header">
+        <h1>_Surveys</h1>
+        <div class="header-links">
+            <a href="Index.html">FILL OUT SURVEY</a>
+            <a href="Result.html" class="active">VIEW SURVEY RESULTS</a>
+        </div>
+    </div>
+
+<body>
+    <h1>Survey Results</h1>
+    <div id="results"></div>
+
+    <script>
+
+
+        // Function to retrieve and display form data from IndexedDB
+        async function displayFormData() {
+            try {
+                // Open the IndexedDB database
+                const db = await new Promise((resolve, reject) => {
+                    const request = indexedDB.open("UserData", 1);
+
+                    request.onerror = function (event) {
+                        reject(event.target.error);
+                    };
+
+                    request.onsuccess = function (event) {
+                        resolve(event.target.result);
+                    };
+                });
+
+                // Start a transaction to read data from the object store
+                const transaction = db.transaction(['formData'], 'readonly');
+                const store = transaction.objectStore('formData');
+
+                // Retrieve all data from the object store
+                const getDataRequest = store.getAll();
+
+                getDataRequest.onsuccess = function (event) {
+                    const formDataArray = event.target.result;
+                    // Display the form data on the page
+                    const resultsDiv = document.getElementById('results');
+
+                    // Total number of surveys completed
+                    const totalSurveys = formDataArray.length;
+
+                    // Calculate average age
+                    const totalAge = formDataArray.reduce((sum, formData) => sum + parseInt(formData.age), 0);
+                    const averageAge = totalAge / totalSurveys;
+
+                    // Find oldest and youngest person
+                    const sortedByAge = formDataArray.sort((a, b) => parseInt(a.age) - parseInt(b.age));
+                    const oldestPerson = sortedByAge[formDataArray.length - 1];
+                    const youngestPerson = sortedByAge[0];
+
+                    // Calculate percentage of people who like Pizza
+                    const pizzaLovers = formDataArray.filter(formData => formData.favorite_food.includes('Pizza')).length;
+                    const pizzaPercentage = (pizzaLovers / totalSurveys) * 100;
+
+                    // Calculate percentage of people who like Pasta
+                    const pastaLovers = formDataArray.filter(formData => formData.favorite_food.includes('Pasta')).length;
+                    const pastaPercentage = (pastaLovers / totalSurveys) * 100;
+
+                    // Calculate percentage of people who like Pop
+                    const popLovers = formDataArray.filter(formData => formData.favorite_food.includes('Pop')).length;
+                    const popPercentage = (popLovers / totalSurveys) * 100;
+
+                    // Calculate percentage of people who like Wors
+                    const worsLovers = formDataArray.filter(formData => formData.favorite_food.includes('Wors')).length;
+                    const worsPercentage = (worsLovers / totalSurveys) * 100;
+
+                    // Calculate average rating for watching movies
+                    const movieRatings = formDataArray.map(formData => {
+                        switch (formData.movies) {
+                            case 'Strongly Agree':
+                                return 5;
+                            case 'Agree':
+                                return 4;
+                            case 'Neutral':
+                                return 3;
+                            case 'Disagree':
+                                return 2;
+                            case 'Strongly Disagree':
+                                return 1;
+                            default:
+                                return 0; // Or any default value you prefer
+                        }
+                    });
+                    const averageMovieRating = movieRatings.length > 0 ? (movieRatings.reduce((sum, rating) => sum + rating, 0) / movieRatings.length).toFixed(1) : 0;
+
+                    // Calculate average rating for listening to radio
+                    const radioRatings = formDataArray.map(formData => {
+                        switch (formData.radio) {
+                            case 'Strongly Agree':
+                                return 5;
+                            case 'Agree':
+                                return 4;
+                            case 'Neutral':
+                                return 3;
+                            case 'Disagree':
+                                return 2;
+                            case 'Strongly Disagree':
+                                return 1;
+                            default:
+                                return 0; // Or any default value you prefer
+                        }
+                    });
+                    const averageRadioRating = radioRatings.length > 0 ? (radioRatings.reduce((sum, rating) => sum + rating, 0) / radioRatings.length).toFixed(1) : 0;
+
+                    // Calculate average rating for eating out
+                    const eatOutRatings = formDataArray.map(formData => {
+                        switch (formData.eat_out) {
+                            case 'Strongly Agree':
+                                return 5;
+                            case 'Agree':
+                                return 4;
+                            case 'Neutral':
+                                return 3;
+                            case 'Disagree':
+                                return 2;
+                            case 'Strongly Disagree':
+                                return 1;
+                            default:
+                                return 0; // Or any default value you prefer
+                        }
+                    });
+                    const averageEatOutRating = eatOutRatings.length > 0 ? (eatOutRatings.reduce((sum, rating) => sum + rating, 0) / eatOutRatings.length).toFixed(1) : 0;
+
+                    // Calculate average rating for watching TV
+                    const watchTVRatings = formDataArray.map(formData => {
+                        switch (formData.watch_tv) {
+                            case 'Strongly Agree':
+                                return 5;
+                            case 'Agree':
+                                return 4;
+                            case 'Neutral':
+                                return 3;
+                            case 'Disagree':
+                                return 2;
+                            case 'Strongly Disagree':
+                                return 1;
+                            default:
+                                return 0; // Or any default value you prefer
+                        }
+                    });
+                    const averageWatchTVRating = watchTVRatings.length > 0 ? (watchTVRatings.reduce((sum, rating) => sum + rating, 0) / watchTVRatings.length).toFixed(1) : 0;
+
+                    // Display the results
+                    resultsDiv.innerHTML = `
+                        <p>Total number of surveys completed: ${totalSurveys}</p>
+                        <p>Average age of participants: ${averageAge.toFixed(1)}</p>
+                        <p>Oldest person participated in survey: ${oldestPerson.full_name} (Age: ${oldestPerson.age})</p>
+                        <p>Youngest person participated in survey: ${youngestPerson.full_name} (Age: ${youngestPerson.age})</p><br>
+
+
+                        <p>Percentage of people who like Pizza: ${pizzaPercentage.toFixed(1)}%</p>
+                        <p>Percentage of people who like Pasta: ${pastaPercentage.toFixed(1)}%</p>
+                        <p>Percentage of people who like Pop: ${popPercentage.toFixed(1)}%</p>
+                        <p>Percentage of people who like Wors: ${worsPercentage.toFixed(1)}%</p><br>
+
+
+                        <p>Average rating for watching movies: ${averageMovieRating}</p>
+                        <p>Average rating for listening to radio: ${averageRadioRating}</p>
+                        <p>Average rating for eating out: ${averageEatOutRating}</p>
+                        <p>Average rating for people who watch TV: ${averageWatchTVRating}</p>
+                    `;
+                };
+
+                getDataRequest.onerror = function (event) {
+                    console.error("Error retrieving form data:", event.target.error);
+                };
+            } catch (error) {
+                console.error("Error retrieving form data:", error);
+            }
+        }
+
+        // Call the function to display form data when the page loads
+        window.addEventListener('load', displayFormData);
+
+    </script>
+</body>
+
+</html>
