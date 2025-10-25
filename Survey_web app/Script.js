@@ -1,5 +1,72 @@
 console.log("Opening database...");
 
+// PWA Installation and Service Worker Registration
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            })
+            .catch(function(err) {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+    });
+}
+
+// PWA Install Prompt
+let deferredPrompt;
+const installButton = document.createElement('button');
+installButton.id = 'install-button';
+installButton.textContent = 'Install App';
+document.body.appendChild(installButton);
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    console.log('PWA install prompt triggered');
+    e.preventDefault();
+    deferredPrompt = e;
+    installButton.style.display = 'block';
+});
+
+installButton.addEventListener('click', async () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User response to the install prompt: ${outcome}`);
+        deferredPrompt = null;
+        installButton.style.display = 'none';
+    }
+});
+
+// Check if app is already installed
+window.addEventListener('appinstalled', (evt) => {
+    console.log('PWA was installed');
+    installButton.style.display = 'none';
+});
+
+// Offline/Online detection
+function updateOnlineStatus() {
+    const offlineIndicator = document.createElement('div');
+    offlineIndicator.className = 'offline-indicator';
+    offlineIndicator.textContent = 'You are offline. Some features may be limited.';
+    
+    if (!navigator.onLine) {
+        document.body.appendChild(offlineIndicator);
+        offlineIndicator.style.display = 'block';
+    } else {
+        const existingIndicator = document.querySelector('.offline-indicator');
+        if (existingIndicator) {
+            existingIndicator.remove();
+        }
+    }
+}
+
+// Listen for online/offline events
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+
+// Check status on load
+updateOnlineStatus();
+
 // Check if the browser supports IndexedDB
 if (!window.indexedDB) {
     console.error("Your browser doesn't support IndexedDB.");
@@ -60,7 +127,7 @@ if (!window.indexedDB) {
         const eatOut = formData.eat_out;
         const watchTV = formData.watch_tv;
 
-        // Check if any field is empty
+  
         if (
             fullName === '' ||
             email === '' ||
